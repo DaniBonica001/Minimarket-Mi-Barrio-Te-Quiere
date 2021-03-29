@@ -1,9 +1,12 @@
 package ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import model.Store;
 import model.personWithTI;
+import model.wrongDayofTheMonth;
 
 public class Main {
 	
@@ -14,6 +17,13 @@ public class Main {
 	private static int counter;
 	
 	public static void main(String[] args) {
+		LocalDate actualDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+		System.out.println("Fecha actual: "+actualDate.format(formatter));
+		
+		int actualDay= actualDate.getDayOfMonth();		
+		System.out.println("Hoy es: "+actualDay);
+		
 		createStore();
 		
 		boolean menu=true;
@@ -25,7 +35,7 @@ public class Main {
 			
 			switch(option) {
 			case 1:
-				registerNewPerson();
+				registerNewPerson(actualDay);
 				
 				break;
 				
@@ -49,7 +59,7 @@ public class Main {
 		store = new Store();
 	}
 	
-	public static void registerNewPerson() {
+	public static void registerNewPerson(int actualDay) {
 		counter++;
 		try {
 			System.out.println("Ingrese el número correspondiente a su tipo de documento de identidad:"+
@@ -61,18 +71,46 @@ public class Main {
 			if (type==1) {
 				throw new personWithTI(type);
 			}else {
-				System.out.println("Ingrese el número del documento de identificación");
-				String idnumber = lector.nextLine();
+				
+				try {
+					System.out.println("Ingrese el número del documento de identificación");
+					String idnumber = lector.nextLine();
 
-				String message="";
-				message= store.registerNewPerson(type,idnumber);
-				System.out.println(message);
+					int penultimateNumber= Integer.parseInt(Character.toString(idnumber.charAt(idnumber.length()-2)));
+					
+					//System.out.println("****penultimo número: "+penultimateNumber);
+					
+					boolean penulNumber =isPar(penultimateNumber);
+					boolean day = isPar(actualDay);
+					
+					if (day==true && penulNumber==true) {
+						throw new wrongDayofTheMonth(actualDay,penultimateNumber);						
+					}else if (day==false && penulNumber==false) {
+						throw new wrongDayofTheMonth(actualDay,penultimateNumber);
+					}else if (day==true && penulNumber==false || day==false && penulNumber==true) {
+						String message="";
+						message= store.registerNewPerson(type,idnumber);
+						System.out.println(message);
+					}					
+					
+				}catch(wrongDayofTheMonth ex) {
+					System.out.println(ex.getMessage());
+				}				
 			}	
 			
 		}catch(personWithTI ex) {
 			System.out.println(ex.getMessage());
 		}
 	
+		
+	}
+	
+	public static boolean isPar(int n) {
+		boolean is=false;
+		if (n%2==0) {
+			is=true;
+		}		
+		return is;
 		
 	}
 
