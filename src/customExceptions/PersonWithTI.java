@@ -1,10 +1,10 @@
-package model;
+package customExceptions;
 
 @SuppressWarnings("serial")
-public class personWithTI extends Exception{
+public class PersonWithTI extends Exception{
 	private int type;
 	
-	public personWithTI(int type) {
+	public PersonWithTI(int type) {
 		super();
 		this.type=type;
 	}
@@ -13,7 +13,7 @@ public class personWithTI extends Exception{
 	public String getMessage() {
 		String message="";
 		if (type==1) {
-			message="Los clientes con Tarjte de identidad no pueden ingresar";
+			message="Los clientes con Tarjteta de identidad no pueden ingresar";
 		}		
 		return message;
 	}

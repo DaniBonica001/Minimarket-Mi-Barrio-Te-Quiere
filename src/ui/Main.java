@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import customExceptions.PersonWithTI;
+import customExceptions.WrongDayofTheMonth;
 import model.Store;
-import model.personWithTI;
-import model.wrongDayofTheMonth;
 
 public class Main {
 	
@@ -61,13 +61,35 @@ public class Main {
 	
 	public static void registerNewPerson(int actualDay) {
 		counter++;
-		try {
+		//try {
 			System.out.println("Ingrese el número correspondiente a su tipo de documento de identidad:"+
 					"\n1.TI - Tarjeta de identidad"+
 					"\n2.CC - Cédula de ciudadanía"+
 					"\n3.PP - Pasaporte"+
 					"\n4.CE - Cédula de Extranjería");
 			int type = Integer.parseInt(lector.nextLine());
+			
+			System.out.println("Ingrese el número del documento de identificación");
+			String idnumber = lector.nextLine();
+			
+						
+			try {
+				String message="";
+				message= store.registerNewPerson(type,idnumber,actualDay);
+				System.out.println(message);
+			} catch (PersonWithTI e) {	
+				System.out.println("No fue posible registrar el nuevo cliente");
+				System.out.println(e.getMessage());				
+			} catch (WrongDayofTheMonth e) {
+				System.out.println("No fue posible registrar el nuevo cliente");				
+				System.out.println(e.getMessage());
+				
+			}
+			
+			
+			
+			
+			/*
 			if (type==1) {
 				throw new personWithTI(type);
 			}else {
@@ -101,17 +123,11 @@ public class Main {
 		}catch(personWithTI ex) {
 			System.out.println(ex.getMessage());
 		}
+		*/
 	
 		
 	}
 	
-	public static boolean isPar(int n) {
-		boolean is=false;
-		if (n%2==0) {
-			is=true;
-		}		
-		return is;
-		
-	}
+	
 
 }

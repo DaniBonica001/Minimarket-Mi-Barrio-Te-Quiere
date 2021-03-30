@@ -1,12 +1,12 @@
-package model;
+package customExceptions;
 
 @SuppressWarnings("serial")
-public class wrongDayofTheMonth extends Exception{
+public class WrongDayofTheMonth extends Exception{
 	
 	private int day;
 	private int idNumber;
 	
-	public wrongDayofTheMonth(int day,int idNumber) {
+	public WrongDayofTheMonth(int day,int idNumber) {
 		this.day=day;
 		this.idNumber=idNumber;
 	}
