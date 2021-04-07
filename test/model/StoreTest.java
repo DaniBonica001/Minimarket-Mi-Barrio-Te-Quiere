@@ -1,6 +1,8 @@
 package model;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 import customExceptions.PersonWithTI;
@@ -18,7 +20,8 @@ class StoreTest {
 		setupScenary1();
 		int type= 2;
 		String idNumber="16710007";
-		int actualDay=29;
+		LocalDate actualDate = LocalDate.now();
+		int actualDay=actualDate.getDayOfMonth();
 		
 		//Store store = new Store();
 		store.registerNewPerson(type, idNumber, actualDay);
@@ -31,7 +34,8 @@ class StoreTest {
 		setupScenary1();
 		int type= 1;
 		String idNumber="1107834340";
-		int actualDay=29;
+		LocalDate actualDate = LocalDate.now();
+		int actualDay=actualDate.getDayOfMonth();
 		
 		//Store store = new Store();
 		store.registerNewPerson(type, idNumber, actualDay);
@@ -44,12 +48,13 @@ class StoreTest {
 		setupScenary1();
 		int type= 2;
 		String idNumber="31913012";
-		int actualDay=29;
+		LocalDate actualDate = LocalDate.now();
+		int actualDay=actualDate.getDayOfMonth();
 		
 		//Store store = new Store();
 		store.registerNewPerson(type, idNumber, actualDay);
 		
-		assertEquals(1,type);	
+		assertNotEquals(1, type);
 	}
 
 }
