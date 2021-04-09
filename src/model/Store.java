@@ -67,9 +67,18 @@ public class Store {
 		if (n%2==0) {
 			is=true;
 		}		
-		return is;
-		
+		return is;		
 	}
+
+	public List<Person> getClients() {
+		return clients;
+	}
+
+	public void setClients(List<Person> clients) {
+		this.clients = clients;
+	}
+	
+	
 	
 	
 
